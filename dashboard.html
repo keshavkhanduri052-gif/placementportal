@@ -302,7 +302,7 @@ async function loadStudent() {
 
     try {
         const response = await fetch(
-            "http://localhost:5000/api/student/" + studentId
+            "https://placementportal-api.onrender.com/api/student/" + studentId
         );
 
         const data = await response.json();
