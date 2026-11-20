@@ -374,9 +374,9 @@ async function loadExternalJobs() {
     `;
 
     try {
-        const response = await fetch(
-            "http://127.0.0.1:5000/api/jobs/external"
-        );
+       const response = await fetch(
+    "https://placementportal-api.onrender.com/api/jobs/external"
+);
 
         if (!response.ok) {
             throw new Error("Backend returned status " + response.status);
