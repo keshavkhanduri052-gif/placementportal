@@ -1,0 +1,368 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Placement Portal</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #222;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 240px;
+            height: 100vh;
+            background: #172554;
+            color: white;
+            padding: 25px 15px;
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 35px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            margin: 8px 0;
+        }
+
+        .sidebar ul li a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 13px 15px;
+            border-radius: 7px;
+        }
+
+        .sidebar ul li a:hover {
+            background: #1e3a8a;
+        }
+
+        .main {
+            margin-left: 240px;
+            padding: 30px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .topbar h1 {
+            color: #172554;
+        }
+
+        .student-name {
+            background: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,.06);
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card, .welcome, .jobs-section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,.07);
+        }
+
+        .card h3 {
+            color: #666;
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .number {
+            font-size: 30px;
+            font-weight: bold;
+            color: #172554;
+        }
+
+        .welcome {
+            margin-bottom: 30px;
+        }
+
+        .welcome h2, .jobs-section h2 {
+            color: #172554;
+            margin-bottom: 10px;
+        }
+
+        .welcome p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .jobs-section h2 {
+            margin-bottom: 20px;
+        }
+
+        .job {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .job:last-child {
+            border-bottom: none;
+        }
+
+        .job-info h3 {
+            margin-bottom: 6px;
+        }
+
+        .job-info p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .apply-btn {
+            background: #172554;
+            color: white;
+            padding: 9px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .apply-btn:hover {
+            background: #1e3a8a;
+        }
+
+        @media(max-width: 900px) {
+            .sidebar {
+                width: 190px;
+            }
+
+            .main {
+                margin-left: 190px;
+            }
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width: 600px) {
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+            }
+
+            .sidebar ul {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .job {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">Placement Portal</div>
+
+        <ul>
+            <li><a href="dashboard.html">🏠 Dashboard</a></li>
+            <li><a href="profile.html">👤 My Profile</a></li>
+            <li><a href="jobs.html">💼 Jobs</a></li>
+            <li><a href="applications.html">📄 Applications</a></li>
+            <li><a href="#" id="logoutBtn">🚪 Logout</a></li>
+        </ul>
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+            <h1>Student Dashboard</h1>
+            <div class="student-name" id="studentName">Loading...</div>
+        </div>
+
+        <section class="welcome">
+            <h2 id="welcomeMessage">Welcome!</h2>
+            <p>
+                Manage your profile, explore job opportunities
+                and track your placement applications from here.
+            </p>
+        </section>
+
+        <section class="cards">
+            <div class="card">
+                <h3>Available Jobs</h3>
+                <div class="number" id="jobCount">4</div>
+            </div>
+
+            <div class="card">
+                <h3>Applications</h3>
+                <div class="number" id="applicationCount">0</div>
+            </div>
+
+            <div class="card">
+                <h3>Shortlisted</h3>
+                <div class="number" id="shortlistedCount">0</div>
+            </div>
+        </section>
+
+        <section class="jobs-section">
+            <h2>Latest Job Opportunities</h2>
+
+            <div class="job">
+                <div class="job-info">
+                    <h3>Software Developer</h3>
+                    <p>Tech Solutions Pvt. Ltd. • Dehradun</p>
+                </div>
+                <a href="jobs.html" class="apply-btn">View Job</a>
+            </div>
+
+            <div class="job">
+                <div class="job-info">
+                    <h3>Web Developer</h3>
+                    <p>Digital Technologies • Remote</p>
+                </div>
+                <a href="jobs.html" class="apply-btn">View Job</a>
+            </div>
+
+            <div class="job">
+                <div class="job-info">
+                    <h3>Python Developer</h3>
+                    <p>Innovate Systems • Bangalore</p>
+                </div>
+                <a href="jobs.html" class="apply-btn">View Job</a>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Check student login
+        const studentId = localStorage.getItem("studentId");
+        const loggedIn = localStorage.getItem("loggedIn");
+        const userRole = localStorage.getItem("userRole");
+
+        if (loggedIn !== "true" || userRole !== "student" || !studentId) {
+            window.location.href = "login.html";
+        }
+
+        // Fetch student details from MongoDB
+       
+async function loadStudent() {
+    const studentId = localStorage.getItem("studentId");
+
+    try {
+        const response = await fetch(
+            "http://localhost:5000/api/student/" + studentId
+        );
+
+        const data = await response.json();
+
+        console.log("API Response:", data);
+
+        if (!response.ok) {
+            throw new Error(data.message || "Student not found");
+        }
+
+        const student = data.student;
+        const fullName = student.firstName + " " + student.lastName;
+
+        document.getElementById("studentName").textContent =
+            "👤 " + fullName;
+
+        document.getElementById("welcomeMessage").textContent =
+            "Welcome, " + fullName + "! 👋";
+
+    } catch (error) {
+        console.error("Dashboard error:", error);
+
+        document.getElementById("studentName").textContent =
+            "Unable to load student";
+
+        document.getElementById("welcomeMessage").textContent =
+            "Student details could not be loaded.";
+    }
+}
+
+        // Load application counts
+        function loadApplications() {
+            const applications =
+                JSON.parse(localStorage.getItem("applications")) || [];
+
+            document.getElementById("applicationCount").textContent =
+                applications.length;
+
+            const shortlisted = applications.filter(function(app) {
+                return app.status === "Shortlisted";
+            }).length;
+
+            document.getElementById("shortlistedCount").textContent =
+                shortlisted;
+        }
+
+        // Logout
+        document.getElementById("logoutBtn").addEventListener("click", function() {
+            localStorage.removeItem("loggedIn");
+            localStorage.removeItem("userRole");
+            localStorage.removeItem("studentId");
+            localStorage.removeItem("studentName");
+            localStorage.removeItem("studentEmail");
+
+            window.location.href = "login.html";
+        });
+
+        loadStudent();
+        loadApplications();
+    </script>
+
+</body>
+</html>

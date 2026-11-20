@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Profile | Placement Portal</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f5f9;
+    color: #202b3c;
+}
+
+header {
+    background: #18253d;
+    color: white;
+    padding: 18px 25px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+nav {
+    background: white;
+    padding: 14px 25px;
+    border-bottom: 1px solid #ddd;
+}
+
+nav a {
+    color: #334e80;
+    text-decoration: none;
+    margin-right: 20px;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 25px auto;
+    padding: 0 15px;
+}
+
+.card {
+    background: white;
+    padding: 24px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px #0000000b;
+}
+
+h2 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.field {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #ccd3df;
+    border-radius: 7px;
+    font-size: 15px;
+    background: white;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+button {
+    padding: 11px 17px;
+    border: 0;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 4px 4px 4px 0;
+}
+
+.primary {
+    background: #3156a5;
+    color: white;
+}
+
+.secondary {
+    background: #e8edf7;
+    color: #233b6b;
+}
+
+.danger {
+    background: #ffe8e8;
+    color: #a12424;
+}
+
+#photoPreview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: none;
+    margin-bottom: 12px;
+    border: 2px solid #ddd;
+}
+
+.skill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #edf2ff;
+    color: #263f79;
+    border-radius: 20px;
+    padding: 7px 10px;
+    margin: 5px;
+}
+
+.skill button {
+    margin: 0;
+    padding: 2px 5px;
+    background: transparent;
+    color: #a12424;
+}
+
+#message {
+    margin: 12px 0;
+    font-weight: bold;
+}
+
+.small {
+    color: #667085;
+    font-size: 13px;
+}
+
+@media (max-width: 650px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 17px;
+    }
+
+    nav a {
+        display: inline-block;
+        margin: 5px 10px 5px 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>Placement Portal</header>
+
+<nav>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="jobs.html">Jobs</a>
+    <a href="applications.html">Applications</a>
+    <a href="profile.html">My Profile</a>
+</nav>
+
+<div class="container">
+
+    <div class="card">
+        <h2>My Profile</h2>
+        <p class="small">fill the details</p>
+
+        <label>Profile Completion</label>
+        <progress id="completionBar" value="0" max="100"
+                  style="width:100%;height:18px"></progress>
+        <p id="completionText">0% completed</p>
+    </div>
+
+    <form id="profileForm">
+
+        <div class="card">
+            <h2>1. Personal Information</h2>
+
+            <div class="field">
+                <label>Profile Photo</label>
+                <img id="photoPreview" alt="Profile photo preview">
+                <input type="file" id="photoInput" accept="image/*">
+                <p class="small">Keep the photo size under 500.</p>
+            </div>
+
+            <div class="grid">
+                <div class="field">
+                    <label for="fullName">Full Name</label>
+                    <input id="fullName" data-field required
+                           placeholder="Enter your full name">
+                </div>
+
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input id="email" data-field type="email" required
+                           placeholder="Enter your email">
+                </div>
+
+                <div class="field">
+                    <label for="phone">Phone Number</label>
+                    <input id="phone" data-field type="tel"
+                           placeholder="Enter phone number">
+                </div>
+
+                <div class="field">
+                    <label for="dob">Date of Birth</label>
+                    <input id="dob" data-field type="date">
+                </div>
+
+                <div class="field">
+                    <label for="gender">Gender</label>
+                    <select id="gender" data-field>
+                        <option value="">Select gender</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+                        <option>Prefer not to say</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="city">City</label>
+                    <input id="city" data-field placeholder="Enter city">
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="address">Address</label>
+                <textarea id="address" data-field
+                          placeholder="Enter your address"></textarea>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>2. Education Details</h2>
+
+            <div class="grid">
+                <div class="field">
+                    <label for="course">Course</label>
+                    <input id="course" data-field required
+                           placeholder="e.g. BCA">
+                </div>
+
+                <div class="field">
+                    <label for="year">Current Year</label>
+                    <select id="year" data-field>
+                        <option value="">Select year</option>
+                        <option>1st Year</option>
+                        <option>2nd Year</option>
+                        <option>3rd Year</option>
+                        <option>4th Year</option>
+                        <option>Passed Out</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="college">College Name</label>
+                    <input id="college" data-field required
+                           placeholder="Enter college name">
+                </div>
+
+                <div class="field">
+                    <label for="university">University</label>
+                    <input id="university" data-field
+                           placeholder="Enter university name">
+                </div>
+
+                <div class="field">
+                    <label for="graduationYear">Expected Graduation Year</label>
+                    <input id="graduationYear" data-field type="number"
+                           min="2000" max="2100" placeholder="e.g. 2027">
+                </div>
+
+                <div class="field">
+                    <label for="cgpa">CGPA / Percentage</label>
+                    <input id="cgpa" data-field
+                           placeholder="Enter CGPA or percentage">
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>3. Skills</h2>
+
+            <div class="field">
+                <label for="skillInput">Add a Skill</label>
+                <input id="skillInput"
+                       placeholder="e.g. HTML, CSS, JavaScript">
+            </div>
+
+            <button type="button" class="secondary" id="addSkillBtn">
+                + Add Skill
+            </button>
+
+            <div id="skillsList"></div>
+        </div>
+
+        <div class="card">
+            <h2>4. About Me</h2>
+
+            <div class="field">
+                <label for="about">Profile Summary</label>
+                <textarea id="about" data-field
+                          placeholder="Write about yourself, your interests and career goals"></textarea>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>5. Resume Upload</h2>
+
+            <div class="field">
+                <label for="resumeInput">Upload Resume (PDF)</label>
+                <input type="file" id="resumeInput" accept=".pdf,application/pdf">
+                <p class="small">selecting pdf will atempt to save the resume.The file size must be up to 5 MB.</p>
+            </div>
+
+            <p id="resumeStatus">No resume saved.</p>
+
+            <button type="button" class="secondary" id="downloadResumeBtn"
+                    hidden>Download Saved Resume</button>
+
+            <button type="button" class="danger" id="deleteResumeBtn"
+                    hidden>Delete Resume</button>
+        </div>
+
+        <div class="card">
+            <button type="submit" class="primary">Save Profile</button>
+            <button type="button" class="secondary" id="reloadBtn">
+                Reload Saved Details
+            </button>
+            <p id="message" role="status"></p>
+        </div>
+
+    </form>
+</div>
+
+<script>
+const form = document.getElementById("profileForm");
+const message = document.getElementById("message");
+const skillsList = document.getElementById("skillsList");
+const skillInput = document.getElementById("skillInput");
+
+const PROFILE_KEY = "placementPortalProfileV2";
+const SKILLS_KEY = "placementPortalSkillsV2";
+const PHOTO_KEY = "placementPortalPhotoV2";
+
+let skills = [];
+let photoData = "";
+let resumeDB = null;
+let resumeObjectUrl = null;
+
+/* ---------- Resume database ---------- */
+
+function openResumeDB() {
+    return new Promise((resolve, reject) => {
+        if (!("indexedDB" in window)) {
+            reject(new Error("Browser resume storage is not available."));
+            return;
+        }
+
+        const request = indexedDB.open("PlacementPortalResumeDB", 1);
+
+        request.onupgradeneeded = function () {
+            const db = request.result;
+
+            if (!db.objectStoreNames.contains("resumes")) {
+                db.createObjectStore("resumes");
+            }
+        };
+
+        request.onsuccess = function () {
+            resolve(request.result);
+        };
+
+        request.onerror = function () {
+            reject(request.error);
+        };
+    });
+}
+
+function saveResumeFile(file) {
+    return new Promise((resolve, reject) => {
+        const transaction = resumeDB.transaction("resumes", "readwrite");
+        const store = transaction.objectStore("resumes");
+
+        store.put({
+            name: file.name,
+            blob: file
+        }, "myResume");
+
+        transaction.oncomplete = resolve;
+        transaction.onerror = () => reject(transaction.error);
+        transaction.onabort = () => reject(transaction.error);
+    });
+}
+
+function getSavedResume() {
+    return new Promise((resolve, reject) => {
+        const transaction = resumeDB.transaction("resumes", "readonly");
+        const request = transaction.objectStore("resumes").get("myResume");
+
+        request.onsuccess = () => resolve(request.result || null);
+        request.onerror = () => reject(request.error);
+    });
+}
+
+function deleteSavedResume() {
+    return new Promise((resolve, reject) => {
+        const transaction = resumeDB.transaction("resumes", "readwrite");
+        transaction.objectStore("resumes").delete("myResume");
+
+        transaction.oncomplete = resolve;
+        transaction.onerror = () => reject(transaction.error);
+    });
+}
+
+async function showSavedResume() {
+    const status = document.getElementById("resumeStatus");
+    const downloadBtn = document.getElementById("downloadResumeBtn");
+    const deleteBtn = document.getElementById("deleteResumeBtn");
+
+    if (!resumeDB) {
+        status.textContent =
+            "Resume storage unavailable. Please use a supported browser.";
+        downloadBtn.hidden = true;
+        deleteBtn.hidden = true;
+        return;
+    }
+
+    try {
+        const saved = await getSavedResume();
+
+        if (saved) {
+            status.textContent = "Saved resume: " + saved.name;
+            downloadBtn.hidden = false;
+            deleteBtn.hidden = false;
+        } else {
+            status.textContent = "No resume saved.";
+            downloadBtn.hidden = true;
+            deleteBtn.hidden = true;
+        }
+    } catch (error) {
+        status.textContent = "Could not read saved resume.";
+    }
+}
+
+document.getElementById("resumeInput").addEventListener("change", async function () {
+    const file = this.files[0];
+
+    if (!file) return;
+
+    if (!file.name.toLowerCase().endsWith(".pdf")) {
+        alert("Please select a PDF resume.");
+        this.value = "";
+        return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+        alert("Resume file 5 MB se chhoti honi chahiye.");
+        this.value = "";
+        return;
+    }
+
+    if (!resumeDB) {
+        alert("Resume storage open nahi hua. Page refresh karke dobara try karo.");
+        return;
+    }
+
+    try {
+        await saveResumeFile(file);
+        await showSavedResume();
+        alert("Resume saved successfully!");
+    } catch (error) {
+        alert("The resume could not be saved . Please try again.");
+    }
+});
+
+document.getElementById("downloadResumeBtn").addEventListener("click", async function () {
+    try {
+        const saved = await getSavedResume();
+        if (!saved) return;
+
+        if (resumeObjectUrl) URL.revokeObjectURL(resumeObjectUrl);
+
+        resumeObjectUrl = URL.createObjectURL(saved.blob);
+
+        const link = document.createElement("a");
+        link.href = resumeObjectUrl;
+        link.download = saved.name;
+        link.click();
+    } catch (error) {
+        alert("the resume could not be downloaded.");
+    }
+});
+
+document.getElementById("deleteResumeBtn").addEventListener("click", async function () {
+    if (!confirm("Do you want delete the saved code?")) return;
+
+    try {
+        await deleteSavedResume();
+        document.getElementById("resumeInput").value = "";
+        await showSavedResume();
+    } catch (error) {
+        alert("The resume can't be deletd.");
+    }
+});
+
+/* ---------- Profile fields ---------- */
+
+function getProfileData() {
+    const data = {};
+
+    document.querySelectorAll("[data-field]").forEach(input => {
+        data[input.id] = input.value;
+    });
+
+    return data;
+}
+
+function updateCompletion() {
+    const fields = Array.from(document.querySelectorAll("[data-field]"));
+    const filled = fields.filter(input => input.value.trim() !== "").length;
+    const percentage = Math.round((filled / fields.length) * 100);
+
+    document.getElementById("completionBar").value = percentage;
+    document.getElementById("completionText").textContent =
+        percentage + "% completed";
+}
+
+function loadProfile() {
+    try {
+        const savedProfile = JSON.parse(
+            localStorage.getItem(PROFILE_KEY) || "{}"
+        );
+
+        document.querySelectorAll("[data-field]").forEach(input => {
+            input.value = savedProfile[input.id] || "";
+        });
+
+        skills = JSON.parse(localStorage.getItem(SKILLS_KEY) || "[]");
+        photoData = localStorage.getItem(PHOTO_KEY) || "";
+
+        renderSkills();
+        showPhoto();
+        updateCompletion();
+
+        message.textContent = "Saved details loaded.";
+    } catch (error) {
+        message.textContent = "Saved details could not be loaded.";
+    }
+}
+
+form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    try {
+        const profile = getProfileData();
+        localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
+        localStorage.setItem(SKILLS_KEY, JSON.stringify(skills));
+
+        /* Older Placement Portal pages ke saath compatibility */
+        localStorage.setItem("phone", profile.phone || "");
+        localStorage.setItem("college", profile.college || "");
+
+        const fields = Object.values(profile);
+        const filled = fields.filter(value =>
+            String(value).trim() !== ""
+        ).length;
+
+        const completion = Math.round((filled / fields.length) * 100);
+        localStorage.setItem("profileCompletion", String(completion));
+
+        updateCompletion();
+        message.textContent = "Profile saved successfully!";
+    } catch (error) {
+        message.textContent =
+            "the profile could not be saved.I clicked on the browser.";
+    }
+});
+
+document.getElementById("reloadBtn").addEventListener("click", loadProfile);
+
+/* ---------- Skills ---------- */
+
+function renderSkills() {
+    skillsList.replaceChildren();
+
+    skills.forEach((skill, index) => {
+        const tag = document.createElement("span");
+        tag.className = "skill";
+
+        const name = document.createElement("span");
+        name.textContent = skill;
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.textContent = "×";
+        remove.title = "Remove " + skill;
+
+        remove.addEventListener("click", function () {
+            skills.splice(index, 1);
+            localStorage.setItem(SKILLS_KEY, JSON.stringify(skills));
+            renderSkills();
+        });
+
+        tag.append(name, remove);
+        skillsList.appendChild(tag);
+    });
+}
+
+document.getElementById("addSkillBtn").addEventListener("click", function () {
+    const skill = skillInput.value.trim();
+
+    if (!skill) {
+        alert("Name of the first skill.");
+        return;
+    }
+
+    if (skills.some(item => item.toLowerCase() === skill.toLowerCase())) {
+        alert("This skill is already added.");
+        return;
+    }
+
+    skills.push(skill);
+    localStorage.setItem(SKILLS_KEY, JSON.stringify(skills));
+    skillInput.value = "";
+    renderSkills();
+});
+
+skillInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("addSkillBtn").click();
+    }
+});
+
+/* ---------- Profile photo ---------- */
+
+function showPhoto() {
+    const preview = document.getElementById("photoPreview");
+
+    if (photoData) {
+        preview.src = photoData;
+        preview.style.display = "block";
+    } else {
+        preview.removeAttribute("src");
+        preview.style.display = "none";
+    }
+}
+
+document.getElementById("photoInput").addEventListener("change", function () {
+    const file = this.files[0];
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+        alert("Please select an image.");
+        this.value = "";
+        return;
+    }
+
+    if (file.size > 500 * 1024) {
+        alert("the photo mustbe smillar 500 kb.");
+        this.value = "";
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function () {
+        try {
+            localStorage.setItem(PHOTO_KEY, reader.result);
+            photoData = reader.result;
+            showPhoto();
+        } catch (error) {
+            alert("the photo could not be saved. try a smaller image");
+        }
+    };
+
+    reader.readAsDataURL(file);
+});
+
+/* ---------- Start page ---------- */
+
+document.querySelectorAll("[data-field]").forEach(input => {
+    input.addEventListener("input", updateCompletion);
+    input.addEventListener("change", updateCompletion);
+});
+
+(async function init() {
+    loadProfile();
+
+    try {
+        resumeDB = await openResumeDB();
+        await showSavedResume();
+    } catch (error) {
+        document.getElementById("resumeStatus").textContent =
+            "Resume storage unavailable. Please refresh and try again.";
+    }
+})();
+</script>
+
+</body>
+</html>

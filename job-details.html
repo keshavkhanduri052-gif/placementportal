@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Job Details | Placement Portal</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        .topbar {
+            background: #ffffff;
+            padding: 18px 40px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .job-details {
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .job-details h1 {
+            margin: 0 0 10px;
+            font-size: 32px;
+        }
+
+        .company {
+            font-size: 18px;
+            color: #2563eb;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .info {
+            padding: 14px 0;
+            border-bottom: 1px solid #eeeeee;
+            font-size: 16px;
+        }
+
+        .description {
+            margin-top: 25px;
+            line-height: 1.7;
+        }
+
+        .description h3,
+        .skills h3 {
+            margin-bottom: 10px;
+        }
+
+        .skills {
+            margin-top: 25px;
+            line-height: 1.8;
+        }
+
+        .skill {
+            display: inline-block;
+            background: #eff6ff;
+            color: #2563eb;
+            padding: 7px 12px;
+            border-radius: 20px;
+            margin: 5px 5px 5px 0;
+            font-size: 14px;
+        }
+
+        .apply-btn {
+            margin-top: 30px;
+            padding: 13px 28px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .apply-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .topbar {
+                padding: 16px 20px;
+            }
+
+            .container {
+                margin: 25px auto;
+            }
+
+            .job-details {
+                padding: 25px;
+            }
+
+            .job-details h1 {
+                font-size: 26px;
+            }
+            
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="topbar">
+        Placement Portal
+    </div>
+
+    <div class="container">
+
+        <a href="jobs.html" class="back-link">
+            ← Back to Jobs
+        </a>
+
+        <div class="job-details">
+
+            <h1 id="jobTitle">Web Developer</h1>
+
+<div class="company" id="jobCompany">
+    Tech Solutions Pvt. Ltd.
+</div>
+
+<div class="info">
+    <strong>📍 Location:</strong>
+    <span id="jobLocation">Dehradun</span>
+</div>
+
+<div class="info">
+    <strong>💼 Job Type:</strong>
+    <span id="jobType">Full Time</span>
+</div>
+
+<div class="info">
+    <strong>🎓 Experience:</strong>
+    <span id="jobExperience">Fresher / Entry Level</span>
+</div>
+
+<div class="description">
+    <h3>Job Description</h3>
+    <p id="jobDescription"></p>
+</div>
+
+<div class="skills">
+    <h3>Required Skills</h3>
+    <div id="jobSkills"></div>
+</div>
+
+<button class="apply-btn" id="applyButton">
+    Apply Now
+</button>
+
+            </div>
+
+            <div class="description">
+                <h3>Job Description</h3>
+
+                <p>
+                    We are looking for a motivated Web Developer to join our
+                    team. The candidate should have basic knowledge of
+                    front-end web development and be willing to learn new
+                    technologies.
+                </p>
+
+                <p>
+                    You will work on developing, maintaining and improving
+                    web applications.
+                </p>
+            </div>
+
+            <div class="skills">
+                <h3>Required Skills</h3>
+
+                <span class="skill">HTML</span>
+                <span class="skill">CSS</span>
+                <span class="skill">JavaScript</span>
+            </div>
+
+            <button class="apply-btn"
+                oneclick="applyjob()">
+                APPLY NOW
+            </button>
+
+        </div>
+
+    </div>
+<script>
+
+    const jobs = {
+
+        web: {
+            title: "Web Developer",
+            company: "Tech Solutions Pvt. Ltd.",
+            location: "Dehradun",
+            type: "Full Time",
+            experience: "Fresher / Entry Level",
+            description: "We are looking for a motivated Web Developer to develop and maintain web applications.",
+            skills: ["HTML", "CSS", "JavaScript"]
+        },
+
+        python: {
+            title: "Python Developer",
+            company: "Innovate Systems",
+            location: "Bangalore",
+            type: "Full Time",
+            experience: "Fresher / Entry Level",
+            description: "Looking for a Python Developer with basic knowledge of Python, SQL and Git.",
+            skills: ["Python", "SQL", "Git"]
+        },
+
+        frontend: {
+            title: "Frontend Developer",
+            company: "Digital Technologies",
+            location: "Remote",
+            type: "Full Time",
+            experience: "Fresher / Entry Level",
+            description: "Work on modern and responsive websites using front-end technologies.",
+            skills: ["HTML", "CSS", "JavaScript"]
+        },
+
+        software: {
+            title: "Junior Software Developer",
+            company: "NextGen Technologies",
+            location: "Noida",
+            type: "Full Time",
+            experience: "Fresher / Entry Level",
+            description: "Join our development team and work on software projects using programming and problem-solving skills.",
+            skills: ["C++", "Python", "DSA"]
+        }
+    };
+
+
+    const params = new URLSearchParams(window.location.search);
+
+    const jobKey = params.get("job") || "web";
+
+    const job = jobs[jobKey];
+
+
+    document.getElementById("jobTitle").textContent = job.title;
+
+    document.getElementById("jobCompany").textContent = job.company;
+
+    document.getElementById("jobLocation").textContent = job.location;
+
+    document.getElementById("jobType").textContent = job.type;
+
+    document.getElementById("jobExperience").textContent = job.experience;
+
+    document.getElementById("jobDescription").textContent = job.description;
+
+
+    const skillsContainer = document.getElementById("jobSkills");
+
+    job.skills.forEach(function(skill) {
+
+        const span = document.createElement("span");
+
+        span.className = "skill";
+
+        span.textContent = skill;
+
+        skillsContainer.appendChild(span);
+
+    });
+
+
+    document.getElementById("applyButton").addEventListener("click", function() {
+
+        let applications =
+            JSON.parse(localStorage.getItem("applications")) || [];
+
+
+        const application = {
+
+            title: job.title,
+
+            company: job.company,
+
+            location: job.location,
+
+            status: "Pending",
+
+            date: new Date().toLocaleDateString()
+
+        };
+
+
+        const alreadyApplied = applications.some(function(app) {
+
+            return app.title === application.title &&
+                   app.company === application.company;
+
+        });
+
+
+        if (alreadyApplied) {
+
+            alert("You have already applied for this job!");
+
+            return;
+
+        }
+
+
+        applications.push(application);
+
+
+        localStorage.setItem(
+            "applications",
+            JSON.stringify(applications)
+        );
+
+
+        alert("Application submitted successfully!");
+
+        window.location.href = "applications.html";
+
+    });
+
+</script>
+  
+</body>
+</html>

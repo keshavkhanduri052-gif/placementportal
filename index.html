@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Placement Portal</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: #222;
+        }
+
+        /* Navbar */
+        nav {
+            background-color: #172554;
+            color: white;
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        nav ul li a:hover {
+            color: #93c5fd;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 60px 8%;
+            background: linear-gradient(135deg, #dbeafe, #eff6ff);
+        }
+
+        .hero-text {
+            max-width: 550px;
+        }
+
+        .hero-text h1 {
+            font-size: 48px;
+            color: #172554;
+            margin-bottom: 20px;
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .buttons a {
+            display: inline-block;
+            padding: 13px 25px;
+            margin-right: 10px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-btn {
+            background-color: #172554;
+            color: white;
+        }
+
+        .register-btn {
+            background-color: white;
+            color: #172554;
+            border: 2px solid #172554;
+        }
+
+        /* Right Box */
+        .hero-box {
+            width: 350px;
+            height: 280px;
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .hero-box h2 {
+            color: #172554;
+            margin-bottom: 20px;
+        }
+
+        .hero-box p {
+            margin: 15px 0;
+            color: #555;
+        }
+
+        /* Features */
+        .features {
+            padding: 60px 8%;
+            text-align: center;
+        }
+
+        .features h2 {
+            font-size: 32px;
+            color: #172554;
+            margin-bottom: 35px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            color: #172554;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #172554;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav ul {
+                gap: 12px;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                gap: 40px;
+            }
+
+            .hero-text h1 {
+                font-size: 36px;
+            }
+
+            .hero-box {
+                width: 100%;
+                max-width: 350px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Placement Portal</div>
+
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="jobs.html">Jobs</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+        </ul>
+    </nav>
+
+
+    <!-- Hero Section -->
+    <section class="hero">
+
+        <div class="hero-text">
+
+            <h1>Build Your Career With Us</h1>
+
+            <p>
+                A student placement management platform where
+                students can find jobs, apply for opportunities
+                and track their placement applications.
+            </p>
+
+            <div class="buttons">
+                <a href="login.html" class="login-btn">Login</a>
+
+                <a href="register.html" class="register-btn">
+                    Register
+                </a>
+            </div>
+
+        </div>
+
+
+        <div class="hero-box">
+
+            <h2>Student Placement</h2>
+
+            <p>✓ Find suitable job opportunities</p>
+
+            <p>✓ Apply for companies</p>
+
+            <p>✓ Manage your profile</p>
+
+            <p>✓ Track application status</p>
+
+        </div>
+
+    </section>
+
+
+    <!-- Features -->
+    <section class="features">
+
+        <h2>Portal Features</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Find Jobs</h3>
+                <p>
+                    Search for companies and job opportunities
+                    according to your skills.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Apply Online</h3>
+                <p>
+                    Apply for suitable jobs directly through
+                    the placement portal.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Track Applications</h3>
+                <p>
+                    Check whether your application is pending,
+                    selected or rejected.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Student Placement Portal | BCA Project</p>
+    </footer>
+    
+
+</body>
+</html>

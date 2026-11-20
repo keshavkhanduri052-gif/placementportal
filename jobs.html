@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Available Jobs | Placement Portal</title>
+        <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1e293b;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 230px;
+            height: 100vh;
+            background: #1e293b;
+            color: white;
+            padding: 25px 15px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 13px 15px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #334155;
+        }
+
+        .main {
+            margin-left: 230px;
+            padding: 35px;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 600px;
+            padding: 13px 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 25px;
+            outline: none;
+        }
+
+        .search-box:focus {
+            border-color: #2563eb;
+        }
+
+        .job-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .job-card {
+            background: white;
+            padding: 22px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .job-card h2 {
+            font-size: 21px;
+            margin-bottom: 12px;
+        }
+
+        .company {
+            color: #2563eb;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .details {
+            color: #64748b;
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+
+        .apply-btn {
+            width: 100%;
+            padding: 12px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .apply-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .no-jobs {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 700px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .sidebar h2 {
+                margin-bottom: 15px;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .job-list {
+                grid-template-columns: 1fr;
+            }
+        }
+        .view-btn {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    background: #475569;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.view-btn:hover {
+    background: #334155;
+}
+
+.full-details p {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+    </style>
+
+</head>
+
+<body>
+
+    <div class="sidebar">
+
+        <h2>Placement Portal</h2>
+
+        <a href="dashboard.html">Dashboard</a>
+        <a href="profile.html">My Profile</a>
+        <a href="jobs.html" class="active">Available Jobs</a>
+        <a href="applications.html">My Applications</a>
+        <a href="login.html">Logout</a>
+
+    </div>
+
+    <div class="main">
+
+        <h1>Available Jobs</h1>
+
+        <p class="subtitle">
+            Find your next opportunity and apply for jobs.
+        </p>
+
+        <input
+            type="text"
+            id="searchInput"
+            class="search-box"
+            placeholder="Search by job title, company or location..."
+        >
+
+        <div id="jobList" class="job-list">
+
+        </div>
+
+    </div>
+
+    <script>
+
+        // Default jobs shown when no admin-created jobs exist.
+       
+// Default jobs
+const defaultJobs = [];
+
+// Read admin-created jobs from localStorage
+function getAdminJobs() {
+    try {
+        const savedJobs = JSON.parse(localStorage.getItem("jobs") || "[]");
+        const deletedJobs = JSON.parse(
+            localStorage.getItem("deletedDefaultJobs") || "[]"
+        );
+
+        const adminJobs = Array.isArray(savedJobs) ? savedJobs : [];
+
+        const availableDefaultJobs = defaultJobs.filter(function(job) {
+            return !deletedJobs.includes(job.title + "|" + job.company);
+        });
+
+        return [...availableDefaultJobs, ...adminJobs];
+    } catch (error) {
+        console.error("Saved Jobs Error:", error);
+        return defaultJobs;
+    }
+}
+
+// All jobs will be stored here
+let allJobs = [];
+
+// Display jobs
+function displayJobs(jobs) {
+    const jobList = document.getElementById("jobList");
+    jobList.innerHTML = "";
+
+    if (!jobs.length) {
+        jobList.innerHTML = `
+            <div class="no-jobs">
+                <h2>No Jobs Found</h2>
+                <p>Try searching with a different keyword.</p>
+            </div>
+        `;
+        return;
+    }
+
+    jobs.forEach(function(job) {
+        const card = document.createElement("div");
+        card.className = "job-card";
+
+        const title = job.title || "Untitled Job";
+        const company = job.company || "Company not specified";
+        const location = job.location || "Not specified";
+        const type = job.type || "Not specified";
+        const level = job.level || "Not specified";
+        const description = job.description || "No description available.";
+
+        card.innerHTML = `
+            <h2 class="job-title"></h2>
+            <div class="company"></div>
+            <div class="details"></div>
+
+            <button class="view-btn">View Details</button>
+            <button class="apply-btn">Apply Now</button>
+
+            <div class="full-details" style="display:none; margin-top:15px;">
+                <p><strong>Job Title:</strong> <span class="detail-title"></span></p>
+                <p><strong>Company:</strong> <span class="detail-company"></span></p>
+                <p><strong>Location:</strong> <span class="detail-location"></span></p>
+                <p><strong>Job Type:</strong> <span class="detail-type"></span></p>
+                <p><strong>Experience:</strong> <span class="detail-level"></span></p>
+                <p><strong>Description:</strong> <span class="detail-description"></span></p>
+            </div>
+        `;
+
+        card.querySelector(".job-title").textContent = title;
+        card.querySelector(".company").textContent = company;
+
+        card.querySelector(".details").textContent =
+            "Location: " + location +
+            " | Type: " + type +
+            " | Level: " + level;
+
+        card.querySelector(".detail-title").textContent = title;
+        card.querySelector(".detail-company").textContent = company;
+        card.querySelector(".detail-location").textContent = location;
+        card.querySelector(".detail-type").textContent = type;
+        card.querySelector(".detail-level").textContent = level;
+        card.querySelector(".detail-description").textContent = description;
+
+        // View Details button
+        card.querySelector(".view-btn").addEventListener("click", function() {
+            const details = card.querySelector(".full-details");
+
+            if (details.style.display === "none") {
+                details.style.display = "block";
+                this.textContent = "Hide Details";
+            } else {
+                details.style.display = "none";
+                this.textContent = "View Details";
+            }
+        });
+
+        // Apply Now button
+        card.querySelector(".apply-btn").addEventListener("click", function() {
+            const studentId = localStorage.getItem("studentId");
+            const studentName = localStorage.getItem("studentName");
+            const studentEmail = localStorage.getItem("studentEmail");
+
+            if (!studentId || !studentName || !studentEmail) {
+                alert("Please login as a student first.");
+                window.location.href = "login.html";
+                return;
+            }
+
+            const selectedJob = {
+                title: title,
+                company: company,
+                location: location,
+                type: type,
+                level: level,
+                description: description,
+                applicationLink: job.applicationLink || job.guid || job.url || ""
+            };
+
+            sessionStorage.setItem(
+                "selectedJob",
+                JSON.stringify(selectedJob)
+            );
+
+            window.location.href = "confirm-application.html";
+        });
+
+        jobList.appendChild(card);
+    });
+}
+
+// Search jobs
+document.getElementById("searchInput").addEventListener("input", function() {
+    const search = this.value.toLowerCase().trim();
+
+    const filteredJobs = allJobs.filter(function(job) {
+        return (
+            (job.title || "").toLowerCase().includes(search) ||
+            (job.company || "").toLowerCase().includes(search) ||
+            (job.location || "").toLowerCase().includes(search)
+        );
+    });
+
+    displayJobs(filteredJobs);
+});
+
+// Load Himalayas jobs from backend
+async function loadExternalJobs() {
+    const jobList = document.getElementById("jobList");
+
+    jobList.innerHTML = `
+        <div class="no-jobs">
+            <h2>Loading Jobs...</h2>
+            <p>Please wait while we fetch available jobs.</p>
+        </div>
+    `;
+
+    try {
+        const response = await fetch(
+            "http://127.0.0.1:5000/api/jobs/external"
+        );
+
+        if (!response.ok) {
+            throw new Error("Backend returned status " + response.status);
+        }
+
+        const result = await response.json();
+
+        console.log("Himalayas API Result:", result);
+
+        if (!result.success || !Array.isArray(result.jobs)) {
+            throw new Error("Invalid jobs response from backend.");
+        }
+
+        const externalJobs = result.jobs.map(function(job) {
+            return {
+                title: job.title || "Untitled Job",
+                company: job.companyName || "Company not specified",
+                location: Array.isArray(job.locationRestrictions)
+                    ? job.locationRestrictions.join(", ") || "Remote"
+                    : "Remote",
+                type: job.employmentType || "Not specified",
+                level: Array.isArray(job.seniority)
+                    ? job.seniority.join(", ") || "Not specified"
+                    : "Not specified",
+                applicationLink:
+                    job.applicationLink || job.guid || job.url || "",
+                description: job.excerpt || "No description available."
+            };
+        });
+
+        // Keep admin jobs and Himalayas jobs together
+        allJobs = [...getAdminJobs(), ...externalJobs];
+
+        console.log("Total jobs displayed:", allJobs.length);
+
+        displayJobs(allJobs);
+
+    } catch (error) {
+        console.error("External Jobs Error:", error);
+
+        // If external API fails, still show admin jobs
+        allJobs = getAdminJobs();
+        displayJobs(allJobs);
+
+        if (allJobs.length === 0) {
+            jobList.innerHTML = `
+                <div class="no-jobs">
+                    <h2>Unable to Load Jobs</h2>
+                    <p>Please check your backend server and try again.</p>
+                </div>
+            `;
+        }
+    }
+}
+
+// Load jobs when page opens
+loadExternalJobs();
+
+</script>
+</body>
+
+</html>

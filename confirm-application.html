@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Your Application | Placement Portal</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f3f6fb;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            width: 100%;
+            max-width: 550px;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            color: #172554;
+            margin-bottom: 10px;
+            font-size: 27px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+
+        .job-box, .student-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #334155;
+            margin-bottom: 15px;
+        }
+
+        .detail {
+            margin: 12px 0;
+            color: #475569;
+        }
+
+        .detail strong {
+            color: #172554;
+        }
+
+        .continue-btn {
+            width: 100%;
+            padding: 15px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .continue-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .back-btn {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .note {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 15px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Confirm Your Application</h1>
+        <p class="subtitle">
+            Review your job details before continuing.
+        </p>
+
+        <div class="job-box">
+            <h3>Job Details</h3>
+
+            <p class="detail">
+                <strong>Job Title:</strong>
+                <span id="jobTitle">Loading...</span>
+            </p>
+
+            <p class="detail">
+                <strong>Company:</strong>
+                <span id="company">Loading...</span>
+            </p>
+
+            <p class="detail">
+                <strong>Location:</strong>
+                <span id="location">Loading...</span>
+            </p>
+        </div>
+
+        <div class="student-box">
+            <h3>Your Details</h3>
+
+            <p class="detail">
+                <strong>Name:</strong>
+                <span id="studentName">Loading...</span>
+            </p>
+
+            <p class="detail">
+                <strong>Email:</strong>
+                <span id="studentEmail">Loading...</span>
+            </p>
+        </div>
+
+        <button class="continue-btn" onclick="continueToHimalayas()">
+            Continue to Himalayas →
+        </button>
+
+        <p class="note">
+            You will be redirected to Himalayas to complete the actual
+            job application. Your Placement Portal records your interest
+            in this job, not the employer's final submission.
+        </p>
+
+        <a href="jobs.html" class="back-btn">
+            ← Back to Jobs
+        </a>
+
+    </div>
+
+    <script>
+        const job = JSON.parse(
+            sessionStorage.getItem("selectedJob") || "null"
+        );
+
+        const studentName = localStorage.getItem("studentName");
+        const studentEmail = localStorage.getItem("studentEmail");
+
+        if (!job || !studentName || !studentEmail) {
+            alert("Job or student details not found. Please try again.");
+            window.location.href = "jobs.html";
+        } else {
+            document.getElementById("jobTitle").textContent = job.title;
+            document.getElementById("company").textContent = job.company;
+            document.getElementById("location").textContent = job.location;
+            document.getElementById("studentName").textContent = studentName;
+            document.getElementById("studentEmail").textContent = studentEmail;
+        }
+
+async function continueToHimalayas() {
+    const studentId = localStorage.getItem("studentId");
+
+    if (!job || !job.applicationLink || !studentId) {
+        alert("Job link or student details missing.");
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            "http://localhost:5000/api/applications",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    studentId: studentId,
+                    title: job.title,
+                    company: job.company,
+                    location: job.location,
+                    applicationLink: job.applicationLink
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok && response.status !== 409) {
+            alert(data.message || "Application save failed.");
+            return;
+        }
+
+        window.location.href = job.applicationLink;
+
+    } catch (error) {
+        console.error("Application Error:", error);
+        alert("Backend connection failed. Please try again.");
+    }
+}
+
+    </script>
+
+</body>
+</html>

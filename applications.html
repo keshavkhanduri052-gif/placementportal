@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Applications - Placement Portal</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+        }
+
+        .sidebar {
+            position: fixed;
+            width: 230px;
+            height: 100vh;
+            background: #1e293b;
+            color: white;
+            padding: 25px 15px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 13px 15px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+        }
+
+        .sidebar a:hover {
+            background: #334155;
+        }
+
+        .main {
+            margin-left: 230px;
+            padding: 35px;
+        }
+
+        h1 {
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .application {
+            background: white;
+            padding: 22px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .application h2 {
+            margin-bottom: 8px;
+        }
+
+        .company {
+            color: #2563eb;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .details {
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 14px;
+        }
+
+        .empty {
+            background: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .empty a {
+            display: inline-block;
+            margin-top: 15px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+        }
+        .view-btn{
+            margin-top: 12px;
+            padding: 10px 15px;
+            background:#2563eb;
+            color:white;
+            border:none;
+            border-radius:6px; 
+            cursor: pointer;
+        }
+        .view-btn:hover {
+            background: #1d4ed8;
+         }
+         .withdraw-btn {
+             margin-top: 10px;
+             padding: 10px 15px;
+             background: #dc2626;
+             color: white;
+             border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+            .withdraw-btn:hover {
+    background: #b91c1c;
+        }
+    .shortlist-btn {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background: #16a34a;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.shortlist-btn:hover {
+    background: #15803d;
+}
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+
+        <h2>Placement Portal</h2>
+
+        <a href="dashboard.html">Dashboard</a>
+        <a href="profile.html">My Profile</a>
+        <a href="jobs.html">Jobs</a>
+        <a href="applications.html">Applications</a>
+        <a href="login.html">Logout</a>
+
+    </div>
+
+
+    <div class="main">
+
+        <h1>My Applications</h1>
+         
+        <p class="subtitle">
+            Track the jobs you have applied for.
+        </p>
+
+        <div id="applicationsContainer"></div>
+
+    </div>
+
+<script>
+    // Load applications from localStorage
+    function loadApplications() {
+        const container = document.getElementById("applicationsContainer");
+
+        const applications =
+            JSON.parse(localStorage.getItem("applications")) || [];
+
+        container.innerHTML = "";
+
+        if (applications.length === 0) {
+            container.innerHTML = `
+                <div class="empty">
+                    <h2>No Applications Yet</h2>
+                    <p>You have not applied for any jobs.</p>
+                    <a href="jobs.html">Browse Jobs</a>
+                </div>
+            `;
+            return;
+        }
+
+        applications.forEach(function(app) {
+            const card = document.createElement("div");
+            card.className = "application";
+
+            const title = document.createElement("h2");
+            title.textContent = app.title || "Untitled Job";
+
+            const company = document.createElement("div");
+            company.className = "company";
+            company.textContent = app.company || "Company not specified";
+
+            const details = document.createElement("div");
+            details.className = "details";
+            details.textContent =
+                "Location: " + (app.location || "Not specified") +
+                " | Applied on: " + (app.date || "Not specified");
+
+            const status = document.createElement("span");
+            status.className = "status";
+            status.textContent = app.status || "Pending";
+
+            const viewButton = document.createElement("button");
+            viewButton.className = "view-btn";
+            viewButton.textContent = "View Details";
+            viewButton.onclick = function() {
+                viewApplication(app.title, app.company, app.location, app.date, app.status);
+            };
+
+            const shortlistButton = document.createElement("button");
+            shortlistButton.className = "shortlist-btn";
+            shortlistButton.textContent = "Shortlist";
+            shortlistButton.onclick = function() {
+                shortlistApplication(app.title, app.company);
+            };
+
+            const withdrawButton = document.createElement("button");
+            withdrawButton.className = "withdraw-btn";
+            withdrawButton.textContent = "Withdraw Application";
+            withdrawButton.onclick = function() {
+                withdrawApplication(app.title, app.company);
+            };
+
+            card.appendChild(title);
+            card.appendChild(company);
+            card.appendChild(details);
+            card.appendChild(status);
+            card.appendChild(document.createElement("br"));
+            card.appendChild(viewButton);
+            card.appendChild(shortlistButton);
+            card.appendChild(withdrawButton);
+
+            container.appendChild(card);
+        });
+    }
+
+    // View application details
+    function viewApplication(title, company, location, date, status) {
+        alert(
+            "Job: " + (title || "N/A") +
+            "\nCompany: " + (company || "N/A") +
+            "\nLocation: " + (location || "N/A") +
+            "\nApplied on: " + (date || "N/A") +
+            "\nStatus: " + (status || "Pending")
+        );
+    }
+
+    // Withdraw application
+    function withdrawApplication(title, company) {
+        if (!confirm("Are you sure you want to withdraw this application?")) {
+            return;
+        }
+
+        let applications =
+            JSON.parse(localStorage.getItem("applications")) || [];
+
+        applications = applications.filter(function(app) {
+            return !(app.title === title && app.company === company);
+        });
+
+        localStorage.setItem("applications", JSON.stringify(applications));
+
+        loadApplications();
+    }
+
+    // Shortlist application
+    function shortlistApplication(title, company) {
+        let applications =
+            JSON.parse(localStorage.getItem("applications")) || [];
+
+        applications.forEach(function(app) {
+            if (app.title === title && app.company === company) {
+                app.status = "Shortlisted";
+            }
+        });
+
+        localStorage.setItem("applications", JSON.stringify(applications));
+
+        loadApplications();
+    }
+
+    // Display applications when page loads
+    loadApplications();
+</script>
+
+
+    
+
+                        
+</body>
+</html>
